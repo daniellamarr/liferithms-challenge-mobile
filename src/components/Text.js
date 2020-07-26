@@ -9,7 +9,8 @@ const Text = props => {
       style={{
         fontSize: props.fontSize,
         fontFamily: props.fontFamily,
-        color: props.color
+        color: props.color,
+        textAlign: props.center ? 'center' : 'auto'
       }}
     >
       {props.children}
@@ -19,8 +20,9 @@ const Text = props => {
 
 Text.defaultProps = {
   color: colors.black,
-  fontSize: 14,
-  fontFamily: 'primary'
+  fontSize: 16,
+  fontFamily: 'primary',
+  center: false
 };
 
 export default Text;

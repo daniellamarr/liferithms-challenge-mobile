@@ -25,7 +25,7 @@ const slides = [
   }
 ];
 
-const Onboarding = () => {
+const Onboarding = props => {
   const [activeSlide, setActiveSlide] = useState(0);
   const flatListRef = createRef(null);
 
@@ -38,6 +38,7 @@ const Onboarding = () => {
 
   const onClickNext = () => {
     if (activeSlide === slides.length - 1) {
+      props.navigation.navigate('Signup');
       return false;
     }
     flatListRef.current.scrollToIndex({index: activeSlide + 1, animated: true});
@@ -52,7 +53,9 @@ const Onboarding = () => {
         {item.title}
       </Text>
       <View style={onboardingStyle.description}>
-        <Text center>{item.description}</Text>
+        <Text color={colors.gray68} center>
+          {item.description}
+        </Text>
       </View>
     </View>
   );

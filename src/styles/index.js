@@ -3,7 +3,11 @@ import colors from './colors';
 
 const {width, height} = Dimensions.get('window');
 
-const mainStyle = StyleSheet.create({});
+const mainStyle = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+  }
+});
 
 const splashscreenStyle = StyleSheet.create({
   container: {
@@ -49,8 +53,37 @@ const onboardingStyle = StyleSheet.create({
   }
 });
 
+const authStyle = StyleSheet.create({
+  container: {
+    width,
+    height,
+    justifyContent: 'center',
+    padding: 60
+  },
+  authView: {
+    marginTop: 60
+  },
+  authButton: {
+    borderColor: colors.primary,
+    borderWidth: 2,
+    borderRadius: 5,
+    alignItems: 'center',
+    padding: 10,
+  },
+  authButtonIcon: {
+    marginRight: 30,
+  },
+  optional: {
+    position: 'absolute',
+    width,
+    bottom: 30,
+    alignItems: 'center'
+  }
+});
+
 export {
   mainStyle,
   splashscreenStyle,
-  onboardingStyle
+  onboardingStyle,
+  authStyle
 };

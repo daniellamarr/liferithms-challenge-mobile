@@ -1,7 +1,9 @@
 import React from 'react';
 import {AppLoading} from 'expo';
 import {useFonts} from 'expo-font';
+import {Provider} from 'react-redux';
 import Router from './Router';
+import store from './src/redux/store';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -14,6 +16,8 @@ export default function App() {
     return <AppLoading />;
   }
   return (
-    <Router />
+    <Provider store={store}>
+      <Router />
+    </Provider>
   );
 }

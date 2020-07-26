@@ -81,9 +81,65 @@ const authStyle = StyleSheet.create({
   }
 });
 
+const dashboardStyle = StyleSheet.create({
+  outerContainer: {
+    height
+  },
+  container: {
+    padding: 40,
+    paddingTop: 80
+  },
+  activitiesView: {
+    marginTop: 60,
+  },
+  activityCard: {
+    width: width/2 - 50,
+    backgroundColor: colors.white,
+    padding: 20,
+    borderRadius: 20,
+    marginBottom: 20,
+    marginRight: 20,
+    shadowColor: 'rgba(27, 27, 27, 0.1)',
+    shadowRadius: 20,
+    shadowOffset: {width: 0, height: -5},
+    shadowOpacity: 0.1,
+  },
+  activityHours: {
+    marginTop: 25
+  },
+  modalize: {
+    padding: 40,
+  },
+  modalizeOverlay: {
+    backgroundColor: 'rgba(255, 255, 255, 0.7)'
+  },
+  modalizeHandle: {
+    backgroundColor: colors.gray68,
+  },
+  rightIcon: {
+    position: 'absolute',
+    right: 40,
+    top: 40,
+  },
+  graph: {
+    backgroundColor: colors.primary,
+    height: 250,
+    padding: 30,
+    borderRadius: 30,
+    marginTop: 30
+  },
+  startDateView: {
+    marginTop: 60
+  },
+  endDateView: {
+    marginTop: 20
+  },
+});
+
 export {
   mainStyle,
   splashscreenStyle,
   onboardingStyle,
-  authStyle
+  authStyle,
+  dashboardStyle
 };

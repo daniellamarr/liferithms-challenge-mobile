@@ -4,6 +4,7 @@ import {authStyle, mainStyle} from '../styles';
 import Text from '../components/Text';
 import Google from '../icons/Google';
 import colors from '../styles/colors';
+import googleSignin from '../helpers/googleSignin';
 
 const Signup = props => {
   return (
@@ -14,7 +15,7 @@ const Signup = props => {
         </Text>
       </View>
       <View style={authStyle.authView}>
-        <TouchableOpacity style={authStyle.authButton}>
+        <TouchableOpacity style={authStyle.authButton} onPress={googleSignin}>
           <View style={mainStyle.row}>
             <View style={authStyle.authButtonIcon}>
               <Google />

@@ -40,6 +40,8 @@ const CreateActivity = (props) => {
   const [endDateOpen, setEndDateOpen] = useState(false);
   const [endTimeOpen, setEndTimeOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [formError, setFormError] = useState('');
+  const [formErrorField, setFormErrorField] = useState('');
 
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', closeAllDateTime);
@@ -88,26 +90,26 @@ const CreateActivity = (props) => {
     }
   };
 
-  const fieldsValidation = (type) => {
+  const fieldsValidation = () => {
     const requiredFields = [
       {
         name: 'activity name',
         value: name,
       },
       {
-        name: 'event description',
+        name: 'activity description',
         value: description,
       },
     ];
 
     const validate = validateFields(requiredFields);
     if (!validate.status) {
-      // setCreateEventErrorField(validate.errorField);
-      // setCreateEventError(validate.message);
+      setFormErrorField(validate.errorField);
+      setFormError(validate.message);
       return false;
     }
-    // setCreateEventErrorField('');
-    // setCreateEventError('');
+    setFormErrorField('');
+    setFormError('');
     return true;
   };
 
@@ -120,26 +122,26 @@ const CreateActivity = (props) => {
     const sumEndDate = parseInt(moment(end_date).format('X'), 10) + endSeconds;
 
     if (sumEndDate <= sumStartDate) {
-      // setCreateEventError('consider adjusting your event end date and time');
-      // setCreateEventErrorField('datetime');
+      setFormError('consider adjusting your activity end date and time');
+      setFormErrorField('datetime');
       return false;
     } else if (sumStartDate <= moment().format('X')) {
-      // setCreateEventError('consider adjusting your event start date and time');
-      // setCreateEventErrorField('datetime');
+      setFormError('consider adjusting your activity start date and time');
+      setFormErrorField('datetime');
       return false;
     }
     return true;
   };
 
   const validateForm = () => {
-    if (!fieldsValidation('final')) {
+    if (!fieldsValidation()) {
       return false;
     }
 
     if (!dateValidation()) {
       return false;
     }
-    // setCreateEventError('');
+    setFormError('');
   };
 
   const handleCreate = async () => {
@@ -205,6 +207,15 @@ const CreateActivity = (props) => {
               onChangeText={(text) => setName(text)}
             />
           </View>
+          {formError.length > 0 && formErrorField === 'activity name' && (
+            <View>
+              <View style={activityStyle.errorField}>
+                <Text fontSize={11} color="red">
+                  {formError.toLowerCase()}
+                </Text>
+              </View>
+            </View>
+          )}
           <View style={mainStyle.inputView}>
             <View style={mainStyle.inputTitle}>
               <Text fontSize={12}>Activity Description</Text>
@@ -217,6 +228,15 @@ const CreateActivity = (props) => {
               onChangeText={(text) => setDescription(text)}
             />
           </View>
+          {formError.length > 0 && formErrorField === 'activity description' && (
+            <View>
+              <View style={activityStyle.errorField}>
+                <Text fontSize={11} color="red">
+                  {formError.toLowerCase()}
+                </Text>
+              </View>
+            </View>
+          )}
           <View style={mainStyle.row}>
             <View style={mainStyle.inputView}>
               <View style={mainStyle.inputTitle}>
@@ -332,6 +352,15 @@ const CreateActivity = (props) => {
                 d && setEndTime(d);
               }}
             />
+          )}
+          {formError.length > 0 && formErrorField === 'datetime' && (
+            <View>
+              <View style={activityStyle.errorField}>
+                <Text fontSize={11} color="red">
+                  {formError.toLowerCase()}
+                </Text>
+              </View>
+            </View>
           )}
           <View style={activityStyle.createButton}>
             <Button onPress={handleCreate}>

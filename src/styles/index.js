@@ -338,6 +338,10 @@ const activityStyle = StyleSheet.create({
   createButton: {
     marginTop: 10,
   },
+  errorField: {
+    marginTop: -10,
+    marginBottom: 10,
+  },
 });
 
 export {

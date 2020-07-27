@@ -8,6 +8,7 @@ import Signup from './src/routes/Signup';
 import Signin from './src/routes/Signin';
 import Dashboard from './src/routes/Dashboard';
 import CreateActivity from './src/routes/CreateActivity';
+import EditActivity from './src/routes/EditActivity';
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,7 @@ const Router = (props) => {
           <>
             <Stack.Screen name="Dashboard" component={Dashboard} />
             <Stack.Screen name="CreateActivity" component={CreateActivity} />
+            <Stack.Screen name="EditActivity" component={EditActivity} />
           </>
         )}
       </Stack.Navigator>

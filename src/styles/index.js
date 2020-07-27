@@ -156,6 +156,7 @@ const dashboardStyle = StyleSheet.create({
   container: {
     padding: 40,
     paddingTop: 80,
+    height: height - 150,
   },
   activitiesView: {
     marginTop: 40,

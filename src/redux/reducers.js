@@ -9,6 +9,9 @@ import {
   CREATE_ACTIVITY_REQUEST,
   CREATE_ACTIVITY_ERROR,
   FILTER_ACTIVITIES,
+  EDIT_ACTIVITY_REQUEST,
+  EDIT_ACTIVITY_ERROR,
+  EDIT_ACTIVITY,
 } from './types';
 
 const authInitialState = {
@@ -90,12 +93,37 @@ export const activitiesReducer = (state = activitiesInitialState, action) => {
     case CREATE_ACTIVITY:
       const {activity, all} = action.payload;
       all.push(activity);
-      console.log(activity, all, 'ss');
+      all.sort((a, b) => a.start_date - b.start_date);
       return {
         ...state,
         all,
         createLoading: false,
         createError: null,
+      };
+    case EDIT_ACTIVITY_REQUEST:
+      return {
+        ...state,
+        editLoading: true,
+        editError: null,
+      };
+    case EDIT_ACTIVITY_ERROR:
+      return {
+        ...state,
+        editLoading: false,
+        editError: action.payload.error,
+      };
+    case EDIT_ACTIVITY:
+      const {editActivity, editAll} = action.payload;
+      const found = editAll.findIndex(
+        (edit) => edit.activityId === editActivity.activityId,
+      );
+      editAll[found] = editActivity;
+      editAll.sort((a, b) => a.start_date - b.start_date);
+      return {
+        ...state,
+        all: editAll,
+        editLoading: false,
+        editError: null,
       };
     case FILTER_ACTIVITIES:
       const {filterType, filterActivities} = action;

@@ -10,6 +10,9 @@ import {
   CREATE_ACTIVITY_REQUEST,
   CREATE_ACTIVITY_ERROR,
   FILTER_ACTIVITIES,
+  EDIT_ACTIVITY_REQUEST,
+  EDIT_ACTIVITY_ERROR,
+  EDIT_ACTIVITY,
 } from './types';
 
 export const setCurrentUser = ({user, token}) => ({
@@ -65,6 +68,25 @@ export const newActivityError = ({error}) => ({
   type: CREATE_ACTIVITY_ERROR,
   payload: {
     error,
+  },
+});
+
+export const editActivityRequest = () => ({
+  type: EDIT_ACTIVITY_REQUEST,
+});
+
+export const editActivityError = ({error}) => ({
+  type: EDIT_ACTIVITY_ERROR,
+  payload: {
+    error,
+  },
+});
+
+export const setEditActivity = ({activity, editAll}) => ({
+  type: EDIT_ACTIVITY,
+  payload: {
+    editActivity: activity,
+    editAll,
   },
 });
 
@@ -145,6 +167,29 @@ export const createActivity = (data) => async (dispatch, getState) => {
     }
   } catch (error) {
     dispatch(newActivityError({error}));
+  }
+};
+
+export const editActivity = (data, activityId) => async (
+  dispatch,
+  getState,
+) => {
+  try {
+    dispatch(editActivityRequest());
+    const response = await aktivitiServiceClient({
+      method: 'put',
+      url: `activities/edit/${activityId}`,
+      data,
+    });
+    if (response.status === 200) {
+      const {activity} = response.data.data;
+      const {activities} = getState();
+      dispatch(setEditActivity({activity, editAll: activities.all}));
+    } else {
+      dispatch(editActivityError({error: response.data}));
+    }
+  } catch (error) {
+    dispatch(editActivityError({error}));
   }
 };
 

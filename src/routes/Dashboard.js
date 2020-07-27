@@ -31,6 +31,10 @@ const Dashboard = (props) => {
     modalizeRef.current.open();
   };
 
+  const onClose = () => {
+    modalizeRef.current.close();
+  };
+
   const handleOpenDialog = (activity) => {
     setCurrentlyViewing(activity);
     onOpen();
@@ -127,6 +131,7 @@ const Dashboard = (props) => {
                 keyExtractor={(item) => item.name}
                 numColumns={2}
                 renderItem={renderActivities}
+                showsVerticalScrollIndicator={false}
               />
             </SafeAreaView>
           )}
@@ -156,7 +161,14 @@ const Dashboard = (props) => {
           </TouchableOpacity>
           {openOptionsPopup && (
             <View style={dashboardStyle.optionsPopup}>
-              <TouchableOpacity style={dashboardStyle.optionsPopupItem}>
+              <TouchableOpacity
+                style={dashboardStyle.optionsPopupItem}
+                onPress={() => {
+                  onClose();
+                  props.navigation.navigate('EditActivity', {
+                    activity: currentlyViewing,
+                  });
+                }}>
                 <Text fontSize={13} color={colors.primary}>
                   Edit Activity
                 </Text>

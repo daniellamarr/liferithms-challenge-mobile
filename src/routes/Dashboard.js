@@ -1,22 +1,36 @@
 import React, {useRef, useState, useEffect} from 'react';
-import {View, SafeAreaView, FlatList, TouchableOpacity} from 'react-native';
+import {
+  View,
+  SafeAreaView,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+  Image,
+} from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import Text from '../components/Text';
 import {dashboardStyle, mainStyle} from '../styles';
 import colors from '../styles/colors';
-import {fetchActivities, filterActivities} from '../redux/actions';
+import {
+  fetchActivities,
+  filterActivities,
+  deleteActivity,
+  signOut,
+} from '../redux/actions';
 import Loader from '../components/Loader';
 import Menu from '../icons/Menu';
 import Elipsis from '../icons/Elipsis';
 import Add from '../icons/Add';
+import Backdrop from '../components/Backdrop';
 
 const Dashboard = (props) => {
   const [currentlyViewing, setCurrentlyViewing] = useState({});
   const [openFilter, setOpenFilter] = useState(false);
   const [filter, setFilter] = useState('Ascending');
   const [openOptionsPopup, setOptionsPopup] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
   const {fetchActivities: fActivities} = props;
 
   const filterArray = ['Ascending', 'Descending'];
@@ -46,6 +60,27 @@ const Dashboard = (props) => {
     setOpenFilter(false);
   };
 
+  const promptDelete = (activityId) => {
+    Alert.alert(
+      'Delete Activity?',
+      "Once deleted, you won't be able to view this activity anymore",
+      [
+        {
+          text: 'Continue',
+          onPress: () => {
+            onClose();
+            props.deleteActivity(activityId);
+          },
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+          onPress: () => {},
+        },
+      ],
+    );
+  };
+
   const renderActivities = ({item}) => (
     <TouchableOpacity
       style={dashboardStyle.activityCard}
@@ -69,9 +104,32 @@ const Dashboard = (props) => {
   return (
     <View style={dashboardStyle.outerContainer}>
       <View style={dashboardStyle.container}>
-        <TouchableOpacity style={mainStyle.menuIconView}>
+        <TouchableOpacity
+          style={mainStyle.menuIconView}
+          onPress={() => setOpenMenu(!openMenu)}>
           <Menu />
         </TouchableOpacity>
+        {openMenu && (
+          <View style={mainStyle.menuList}>
+            <View style={mainStyle.menuProfile}>
+              <Image
+                source={{uri: props.auth.user.picture}}
+                style={mainStyle.menuImage}
+              />
+              <Text
+                fontSize={12}
+                color={colors.primary}
+                fontFamily="primaryMedium">
+                {props.auth.user.name}
+              </Text>
+            </View>
+            <TouchableOpacity onPress={() => props.signOut()}>
+              <Text fontSize={12} color={colors.gray68}>
+                Logout
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
         <View>
           <Text fontSize={14} color={colors.primary}>
             Hello,
@@ -173,7 +231,9 @@ const Dashboard = (props) => {
                   Edit Activity
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={dashboardStyle.optionsPopupItem}>
+              <TouchableOpacity
+                style={dashboardStyle.optionsPopupItem}
+                onPress={() => promptDelete(currentlyViewing.activityId)}>
                 <Text fontSize={13} color={'red'}>
                   Delete Activity
                 </Text>
@@ -195,6 +255,9 @@ const Dashboard = (props) => {
           </View>
         </View>
       </Modalize>
+      {props.activities.deleteLoading && (
+        <Backdrop loader loaderText="deleting activity" />
+      )}
     </View>
   );
 };
@@ -207,6 +270,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   fetchActivities,
   filterActivities,
+  deleteActivity,
+  signOut,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

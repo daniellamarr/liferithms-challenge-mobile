@@ -13,6 +13,10 @@ import {
   EDIT_ACTIVITY_REQUEST,
   EDIT_ACTIVITY_ERROR,
   EDIT_ACTIVITY,
+  DELETE_ACTIVITY,
+  DELETE_ACTIVITY_ERROR,
+  DELETE_ACTIVITY_REQUEST,
+  SIGN_OUT,
 } from './types';
 
 export const setCurrentUser = ({user, token}) => ({
@@ -32,6 +36,10 @@ export const authError = ({error}) => ({
   payload: {
     error,
   },
+});
+
+export const setSignOut = () => ({
+  type: SIGN_OUT,
 });
 
 export const fetchActivitiesRequest = () => ({
@@ -90,6 +98,25 @@ export const setEditActivity = ({activity, editAll}) => ({
   },
 });
 
+export const deleteActivityRequest = () => ({
+  type: DELETE_ACTIVITY_REQUEST,
+});
+
+export const deleteActivityError = ({error}) => ({
+  type: DELETE_ACTIVITY_ERROR,
+  payload: {
+    error,
+  },
+});
+
+export const setDeleteActivity = ({activityId, deleteAll}) => ({
+  type: DELETE_ACTIVITY,
+  payload: {
+    activityId,
+    deleteAll,
+  },
+});
+
 export const setFilterActivities = (filterType, all) => ({
   type: FILTER_ACTIVITIES,
   filterType,
@@ -130,6 +157,10 @@ export const signIn = (token) => async (dispatch) => {
   } catch (error) {
     dispatch(authError({error}));
   }
+};
+
+export const signOut = () => async (dispatch) => {
+  dispatch(setSignOut());
 };
 
 export const fetchActivities = () => async (dispatch) => {
@@ -190,6 +221,24 @@ export const editActivity = (data, activityId) => async (
     }
   } catch (error) {
     dispatch(editActivityError({error}));
+  }
+};
+
+export const deleteActivity = (activityId) => async (dispatch, getState) => {
+  try {
+    dispatch(deleteActivityRequest());
+    const response = await aktivitiServiceClient({
+      method: 'put',
+      url: `activities/delete/${activityId}`,
+    });
+    if (response.status === 200) {
+      const {activities} = getState();
+      dispatch(setDeleteActivity({activityId, deleteAll: activities.all}));
+    } else {
+      dispatch(deleteActivityError({error: response.data}));
+    }
+  } catch (error) {
+    dispatch(deleteActivityError({error}));
   }
 };
 

@@ -6,6 +6,7 @@ import {
   TextInput,
   Keyboard,
   Platform,
+  Image,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {connect} from 'react-redux';
@@ -181,6 +182,12 @@ const CreateActivity = (props) => {
             <Text color={colors.white} fontSize={18}>
               Create an activity
             </Text>
+          </View>
+          <View style={activityStyle.headerImageView}>
+            <Image
+              source={require('../assets/images/activity.png')}
+              style={activityStyle.headerImage}
+            />
           </View>
         </View>
       </View>

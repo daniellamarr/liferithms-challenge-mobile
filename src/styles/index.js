@@ -23,6 +23,36 @@ const mainStyle = StyleSheet.create({
     position: 'absolute',
     right: 40,
     top: 85,
+    zIndex: 10,
+  },
+  menuList: {
+    backgroundColor: colors.white,
+    padding: 15,
+    paddingTop: 20,
+    position: 'absolute',
+    right: 40,
+    top: 100,
+    borderRadius: 5,
+    shadowColor: colors.gray68,
+    shadowRadius: 20,
+    shadowOffset: {width: 0, height: -5},
+    shadowOpacity: 0.1,
+    elevation: 1,
+    zIndex: 10,
+  },
+  menuItem: {
+    marginBottom: 20,
+  },
+  menuProfile: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  menuImage: {
+    height: 30,
+    width: 30,
+    borderRadius: 15,
+    marginRight: 10,
   },
   footer: {
     position: 'absolute',
@@ -281,6 +311,13 @@ const activityStyle = StyleSheet.create({
   },
   headerBack: {
     marginRight: 30,
+  },
+  headerImageView: {
+    marginTop: 40,
+  },
+  headerImage: {
+    width: 130,
+    height: 90,
   },
   container: {
     padding: 40,

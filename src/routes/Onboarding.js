@@ -1,5 +1,11 @@
 import React, {createRef, useState} from 'react';
-import {View, FlatList, SafeAreaView, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  FlatList,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import Text from '../components/Text';
 import {onboardingStyle} from '../styles';
 import Onboarding1 from '../assets/images/onboarding1.png';
@@ -10,22 +16,25 @@ import colors from '../styles/colors';
 const slides = [
   {
     title: 'Track Your Workouts',
-    description: 'With Aktiviti you can track your daily workout and see your progress',
-    image: Onboarding1
+    description:
+      'With Aktiviti you can track your daily workout and see your progress',
+    image: Onboarding1,
   },
   {
     title: 'Track Your Work',
-    description: 'With Aktiviti you can track your daily workout and see your progress',
-    image: Onboarding2
+    description:
+      'With Aktiviti you can track your daily workout and see your progress',
+    image: Onboarding2,
   },
   {
     title: 'Track Your Hygeine',
-    description: 'With Aktiviti you can track your daily workout and see your progress',
-    image: Onboarding3
-  }
+    description:
+      'With Aktiviti you can track your daily workout and see your progress',
+    image: Onboarding3,
+  },
 ];
 
-const Onboarding = props => {
+const Onboarding = (props) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const flatListRef = createRef(null);
 
@@ -47,9 +56,7 @@ const Onboarding = props => {
   const renderSlides = ({item}) => (
     <View style={onboardingStyle.container}>
       <Image source={item.image} style={onboardingStyle.image} />
-      <Text
-        fontSize={24}
-        fontFamily="primaryMedium">
+      <Text fontSize={24} fontFamily="primaryMedium">
         {item.title}
       </Text>
       <View style={onboardingStyle.description}>
@@ -61,11 +68,11 @@ const Onboarding = props => {
   );
 
   return (
-    <View>
+    <View style={{backgroundColor: colors.white}}>
       <SafeAreaView>
         <FlatList
           data={slides}
-          keyExtractor={item => item.title}
+          keyExtractor={(item) => item.title}
           renderItem={renderSlides}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -77,15 +84,14 @@ const Onboarding = props => {
       <View style={onboardingStyle.nextView}>
         <TouchableOpacity
           style={onboardingStyle.nextButton}
-          onPress={onClickNext}
-        >
+          onPress={onClickNext}>
           <Text color={colors.white}>
             {activeSlide === slides.length - 1 ? 'Start' : 'Next'}
           </Text>
         </TouchableOpacity>
       </View>
     </View>
-  )
-}
+  );
+};
 
 export default Onboarding;

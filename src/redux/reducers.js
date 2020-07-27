@@ -12,6 +12,10 @@ import {
   EDIT_ACTIVITY_REQUEST,
   EDIT_ACTIVITY_ERROR,
   EDIT_ACTIVITY,
+  DELETE_ACTIVITY_REQUEST,
+  DELETE_ACTIVITY_ERROR,
+  DELETE_ACTIVITY,
+  SIGN_OUT,
 } from './types';
 
 const authInitialState = {
@@ -47,6 +51,14 @@ export const authReducer = (state = authInitialState, action) => {
       return {
         ...state,
         loading: true,
+        error: null,
+      };
+    case SIGN_OUT:
+      return {
+        ...state,
+        loading: false,
+        user: {},
+        token: null,
         error: null,
       };
     default:
@@ -125,6 +137,30 @@ export const activitiesReducer = (state = activitiesInitialState, action) => {
         editLoading: false,
         editError: null,
       };
+    case DELETE_ACTIVITY_REQUEST:
+      return {
+        ...state,
+        deleteLoading: true,
+        deleteError: null,
+      };
+    case DELETE_ACTIVITY_ERROR:
+      return {
+        ...state,
+        deleteLoading: false,
+        deleteError: action.payload.error,
+      };
+    case DELETE_ACTIVITY:
+      const {activityId, deleteAll} = action.payload;
+      const newDeleteAll = deleteAll.filter(
+        (edit) => edit.activityId !== activityId,
+      );
+      newDeleteAll.sort((a, b) => a.start_date - b.start_date);
+      return {
+        ...state,
+        all: newDeleteAll,
+        deleteLoading: false,
+        deleteError: null,
+      };
     case FILTER_ACTIVITIES:
       const {filterType, filterActivities} = action;
       if (filterType === 'Ascending') {
@@ -134,6 +170,13 @@ export const activitiesReducer = (state = activitiesInitialState, action) => {
       }
       return {
         ...state,
+      };
+    case SIGN_OUT:
+      return {
+        ...state,
+        loading: false,
+        all: [],
+        error: null,
       };
     default:
       return state;

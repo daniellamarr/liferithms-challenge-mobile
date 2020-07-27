@@ -6,7 +6,38 @@ const {width, height} = Dimensions.get('window');
 const mainStyle = StyleSheet.create({
   row: {
     flexDirection: 'row',
-  }
+  },
+  backdrop: {
+    height,
+    width,
+    top: 0,
+    left: 0,
+    position: 'absolute',
+    zIndex: 100000,
+  },
+  backdropInner: {
+    alignItems: 'center',
+    paddingTop: height / 2,
+  },
+  menuIconView: {
+    position: 'absolute',
+    right: 40,
+    top: 85,
+  },
+  footer: {
+    position: 'absolute',
+    width,
+    bottom: 20,
+    alignItems: 'center',
+  },
+  activeRoute: {
+    height: 60,
+    width: 60,
+    backgroundColor: colors.primary,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 const splashscreenStyle = StyleSheet.create({
@@ -15,8 +46,8 @@ const splashscreenStyle = StyleSheet.create({
     width,
     height,
     alignItems: 'center',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 
 const onboardingStyle = StyleSheet.create({
@@ -25,12 +56,12 @@ const onboardingStyle = StyleSheet.create({
     width,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20
+    padding: 20,
   },
   image: {
     marginBottom: 80,
     width: 280,
-    height: 190
+    height: 190,
   },
   description: {
     paddingLeft: 30,
@@ -41,7 +72,7 @@ const onboardingStyle = StyleSheet.create({
     position: 'absolute',
     bottom: -50,
     width,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   nextButton: {
     backgroundColor: colors.primary,
@@ -49,8 +80,8 @@ const onboardingStyle = StyleSheet.create({
     width: 120,
     paddingTop: 25,
     alignItems: 'center',
-    borderRadius: 60
-  }
+    borderRadius: 60,
+  },
 });
 
 const authStyle = StyleSheet.create({
@@ -58,10 +89,10 @@ const authStyle = StyleSheet.create({
     width,
     height,
     justifyContent: 'center',
-    padding: 60
+    padding: 60,
   },
   authView: {
-    marginTop: 60
+    marginTop: 60,
   },
   authButton: {
     borderColor: colors.primary,
@@ -77,23 +108,31 @@ const authStyle = StyleSheet.create({
     position: 'absolute',
     width,
     bottom: 30,
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 const dashboardStyle = StyleSheet.create({
   outerContainer: {
-    height
+    height,
   },
   container: {
     padding: 40,
-    paddingTop: 80
+    paddingTop: 80,
   },
   activitiesView: {
     marginTop: 60,
   },
+  emptyActivity: {
+    height: 200,
+    width: width - 80,
+    backgroundColor: colors.primary,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   activityCard: {
-    width: width/2 - 50,
+    width: width / 2 - 50,
     backgroundColor: colors.white,
     padding: 20,
     borderRadius: 20,
@@ -105,13 +144,13 @@ const dashboardStyle = StyleSheet.create({
     shadowOpacity: 0.1,
   },
   activityHours: {
-    marginTop: 25
+    marginTop: 25,
   },
   modalize: {
     padding: 40,
   },
   modalizeOverlay: {
-    backgroundColor: 'rgba(255, 255, 255, 0.7)'
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
   },
   modalizeHandle: {
     backgroundColor: colors.gray68,
@@ -119,20 +158,20 @@ const dashboardStyle = StyleSheet.create({
   rightIcon: {
     position: 'absolute',
     right: 40,
-    top: 40,
+    top: 50,
   },
   graph: {
     backgroundColor: colors.primary,
     height: 250,
     padding: 30,
     borderRadius: 30,
-    marginTop: 30
+    marginTop: 30,
   },
   startDateView: {
-    marginTop: 60
+    marginTop: 60,
   },
   endDateView: {
-    marginTop: 20
+    marginTop: 20,
   },
 });
 
@@ -141,5 +180,5 @@ export {
   splashscreenStyle,
   onboardingStyle,
   authStyle,
-  dashboardStyle
+  dashboardStyle,
 };

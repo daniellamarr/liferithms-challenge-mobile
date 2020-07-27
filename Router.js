@@ -1,6 +1,7 @@
-import React, {useState, useEffect, createRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {connect} from 'react-redux';
 import Splashscreen from './src/routes/Splashscreen';
 import Onboarding from './src/routes/Onboarding';
 import Signup from './src/routes/Signup';
@@ -9,18 +10,42 @@ import Dashboard from './src/routes/Dashboard';
 
 const Stack = createStackNavigator();
 
-const Router = () => {
+const Router = (props) => {
+  const [loading, setLoading] = useState(true);
+
+  const launchApp = () => {
+    setTimeout(() => setLoading(false), 3000);
+  };
+
+  useEffect(() => {
+    launchApp();
+  }, []);
+
+  if (loading) {
+    return <Splashscreen />;
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
-        <Stack.Screen name="Dashboard" component={Dashboard} />
-        <Stack.Screen name="Onboarding" component={Onboarding} />
-        <Stack.Screen name="Splashscreen" component={Splashscreen} />
-        <Stack.Screen name="Signup" component={Signup} />
-        <Stack.Screen name="Signin" component={Signin} />
+        {!props.auth.token ? (
+          <>
+            <Stack.Screen name="Onboarding" component={Onboarding} />
+            <Stack.Screen name="Signup" component={Signup} />
+            <Stack.Screen name="Signin" component={Signin} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="Dashboard" component={Dashboard} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-export default Router;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {})(Router);

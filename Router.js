@@ -7,6 +7,7 @@ import Onboarding from './src/routes/Onboarding';
 import Signup from './src/routes/Signup';
 import Signin from './src/routes/Signin';
 import Dashboard from './src/routes/Dashboard';
+import CreateActivity from './src/routes/CreateActivity';
 
 const Stack = createStackNavigator();
 
@@ -37,6 +38,7 @@ const Router = (props) => {
         ) : (
           <>
             <Stack.Screen name="Dashboard" component={Dashboard} />
+            <Stack.Screen name="CreateActivity" component={CreateActivity} />
           </>
         )}
       </Stack.Navigator>

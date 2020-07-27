@@ -6,6 +6,10 @@ import {
   SET_ACTIVITIES,
   FETCH_ACTIVITIES_REQUEST,
   FETCH_ACTIVITIES_ERROR,
+  CREATE_ACTIVITY,
+  CREATE_ACTIVITY_REQUEST,
+  CREATE_ACTIVITY_ERROR,
+  FILTER_ACTIVITIES,
 } from './types';
 
 export const setCurrentUser = ({user, token}) => ({
@@ -43,6 +47,31 @@ export const setActivities = ({activities}) => ({
   payload: {
     activities,
   },
+});
+
+export const setNewActivity = ({activity, all}) => ({
+  type: CREATE_ACTIVITY,
+  payload: {
+    activity,
+    all,
+  },
+});
+
+export const newActivityRequest = () => ({
+  type: CREATE_ACTIVITY_REQUEST,
+});
+
+export const newActivityError = ({error}) => ({
+  type: CREATE_ACTIVITY_ERROR,
+  payload: {
+    error,
+  },
+});
+
+export const setFilterActivities = (filterType, all) => ({
+  type: FILTER_ACTIVITIES,
+  filterType,
+  filterActivities: all,
 });
 
 export const signUp = (token) => async (dispatch) => {
@@ -97,4 +126,29 @@ export const fetchActivities = () => async (dispatch) => {
   } catch (error) {
     dispatch(fetchActivitiesError({error}));
   }
+};
+
+export const createActivity = (data) => async (dispatch, getState) => {
+  try {
+    dispatch(newActivityRequest());
+    const response = await aktivitiServiceClient({
+      method: 'post',
+      url: 'activities/create',
+      data,
+    });
+    if (response.status === 201) {
+      const {activity} = response.data.data;
+      const {activities} = getState();
+      dispatch(setNewActivity({activity, all: activities.all}));
+    } else {
+      dispatch(newActivityError({error: response.data}));
+    }
+  } catch (error) {
+    dispatch(newActivityError({error}));
+  }
+};
+
+export const filterActivities = (filter) => (dispatch, getState) => {
+  const {activities} = getState();
+  dispatch(setFilterActivities(filter, activities.all));
 };

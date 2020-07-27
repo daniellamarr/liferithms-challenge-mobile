@@ -12,7 +12,9 @@ const Backdrop = (props) => {
         {props.loader && <Loader size={props.loaderSize} />}
         {props.loaderText && (
           <View style={mainStyle.marginTop}>
-            <Text color={colors.white}>{props.loaderText}</Text>
+            <Text fontSize={12} color={colors.white}>
+              {props.loaderText}
+            </Text>
           </View>
         )}
       </View>

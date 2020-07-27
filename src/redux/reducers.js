@@ -5,6 +5,10 @@ import {
   AUTH_REQUEST,
   FETCH_ACTIVITIES_REQUEST,
   FETCH_ACTIVITIES_ERROR,
+  CREATE_ACTIVITY,
+  CREATE_ACTIVITY_REQUEST,
+  CREATE_ACTIVITY_ERROR,
+  FILTER_ACTIVITIES,
 } from './types';
 
 const authInitialState = {
@@ -50,9 +54,11 @@ export const authReducer = (state = authInitialState, action) => {
 export const activitiesReducer = (state = activitiesInitialState, action) => {
   switch (action.type) {
     case SET_ACTIVITIES:
+      const {activities} = action.payload;
+      activities.sort((a, b) => a.start_date - b.start_date);
       return {
         ...state,
-        all: action.payload.activities,
+        all: activities,
         loading: false,
         error: null,
       };
@@ -68,6 +74,38 @@ export const activitiesReducer = (state = activitiesInitialState, action) => {
         ...state,
         loading: false,
         error: action.payload.error,
+      };
+    case CREATE_ACTIVITY_REQUEST:
+      return {
+        ...state,
+        createLoading: true,
+        createError: null,
+      };
+    case CREATE_ACTIVITY_ERROR:
+      return {
+        ...state,
+        createLoading: false,
+        createError: action.payload.error,
+      };
+    case CREATE_ACTIVITY:
+      const {activity, all} = action.payload;
+      all.push(activity);
+      console.log(activity, all, 'ss');
+      return {
+        ...state,
+        all,
+        createLoading: false,
+        createError: null,
+      };
+    case FILTER_ACTIVITIES:
+      const {filterType, filterActivities} = action;
+      if (filterType === 'Ascending') {
+        filterActivities.sort((a, b) => a.start_date - b.start_date);
+      } else {
+        filterActivities.sort((a, b) => b.start_date - a.start_date);
+      }
+      return {
+        ...state,
       };
     default:
       return state;

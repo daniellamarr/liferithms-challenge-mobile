@@ -38,6 +38,43 @@ const mainStyle = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  inputView: {
+    marginBottom: 20,
+  },
+  input: {
+    borderRadius: 5,
+    borderColor: colors.primary,
+    borderWidth: 2,
+    padding: 15,
+    fontSize: 10,
+    fontFamily: 'primary',
+  },
+  textarea: {
+    borderRadius: 5,
+    borderColor: colors.primary,
+    borderWidth: 2,
+    padding: 15,
+    paddingTop: 0,
+    fontSize: 10,
+    fontFamily: 'primary',
+    height: 100,
+  },
+  inputTitle: {
+    marginBottom: 10,
+  },
+  button: {
+    borderRadius: 5,
+    padding: 15,
+    alignItems: 'center',
+  },
+  buttonIcon: {
+    fontSize: 18,
+    color: colors.white,
+    marginLeft: 20,
+  },
+  flex1: {
+    flex: 1,
+  },
 });
 
 const splashscreenStyle = StyleSheet.create({
@@ -121,7 +158,31 @@ const dashboardStyle = StyleSheet.create({
     paddingTop: 80,
   },
   activitiesView: {
-    marginTop: 60,
+    marginTop: 40,
+  },
+  filterView: {
+    alignItems: 'flex-end',
+  },
+  filter: {
+    backgroundColor: colors.white,
+    padding: 5,
+    marginBottom: 20,
+    borderRadius: 5,
+    borderColor: colors.primary,
+    borderWidth: 1,
+  },
+  filterList: {
+    backgroundColor: colors.white,
+    padding: 10,
+    paddingTop: 15,
+    position: 'absolute',
+    right: 0,
+    width: 150,
+    borderRadius: 5,
+    zIndex: 10,
+  },
+  filterListItem: {
+    marginBottom: 5,
   },
   emptyActivity: {
     height: 200,
@@ -142,6 +203,7 @@ const dashboardStyle = StyleSheet.create({
     shadowRadius: 20,
     shadowOffset: {width: 0, height: -5},
     shadowOpacity: 0.1,
+    elevation: 1,
   },
   activityHours: {
     marginTop: 25,
@@ -160,6 +222,25 @@ const dashboardStyle = StyleSheet.create({
     right: 40,
     top: 50,
   },
+  optionsPopup: {
+    backgroundColor: colors.white,
+    padding: 10,
+    paddingTop: 20,
+    position: 'absolute',
+    right: 40,
+    top: 45,
+    width: 150,
+    borderRadius: 5,
+    shadowColor: colors.gray68,
+    shadowRadius: 20,
+    shadowOffset: {width: 0, height: -5},
+    shadowOpacity: 0.1,
+    elevation: 1,
+    zIndex: 10,
+  },
+  optionsPopupItem: {
+    marginBottom: 10,
+  },
   graph: {
     backgroundColor: colors.primary,
     height: 250,
@@ -175,10 +256,57 @@ const dashboardStyle = StyleSheet.create({
   },
 });
 
+const activityStyle = StyleSheet.create({
+  headerLeftBg: {
+    width: width / 2,
+    height: 250,
+    backgroundColor: colors.primary,
+    borderBottomLeftRadius: 30,
+  },
+  headerRightBg: {
+    width: width / 2,
+    height: 250,
+    backgroundColor: '#17ce6af0',
+    borderBottomRightRadius: 30,
+  },
+  header: {
+    position: 'absolute',
+    left: 40,
+    top: 60,
+  },
+  headerInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerBack: {
+    marginRight: 30,
+  },
+  container: {
+    padding: 40,
+  },
+  dateButton: {
+    width: (width - 80) / 2 - 10,
+    borderRadius: 5,
+    borderColor: colors.primary,
+    borderWidth: 2,
+    padding: 15,
+  },
+  leftDateButton: {
+    marginRight: 10,
+  },
+  rightDateButton: {
+    marginLeft: 10,
+  },
+  createButton: {
+    marginTop: 10,
+  },
+});
+
 export {
   mainStyle,
   splashscreenStyle,
   onboardingStyle,
   authStyle,
   dashboardStyle,
+  activityStyle,
 };

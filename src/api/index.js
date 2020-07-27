@@ -20,7 +20,7 @@ const getToken = () => {
 
 const aktivitiServiceClient = async (requestConfig) =>
   create({
-    baseURL: 'http://a9e3618f0237.ngrok.io/api/',
+    baseURL: 'http://02d84877ebda.ngrok.io/api/',
     timeout: 150000,
     headers: {
       'Content-Type': 'application/json',
